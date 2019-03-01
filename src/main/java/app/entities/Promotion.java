@@ -1,37 +1,64 @@
 package app.entities;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import java.sql.Timestamp;
-import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+
 public class Promotion {
-    private String codeFormation;
+    @EmbeddedId
+    private PromotionPK id;
+    @Column(name = "ANNEE_UNIVERSITAIRE", insertable = false, updatable = false)
     private String anneeUniversitaire;
-    private Integer noEnseignant;
+    @Column(name = "SIGLE_PROMOTION")
     private String siglePromotion;
+    @Column(name = "NB_MAX_ETUDIANT")
     private Short nbMaxEtudiant;
+    @Column(name = "DATE_REPONSE_LP")
     private Timestamp dateReponseLp;
+    @Column(name = "DATE_REPONSE_LALP")
     private Timestamp dateReponseLalp;
+    @Column(name = "DATE_RENTREE")
     private Timestamp dateRentree;
+    @Column(name = "LIEU_RENTREE")
     private String lieuRentree;
+    @Column(name = "PROCESSUS_STAGE")
     private String processusStage;
+    @Column(name = "COMMENTAIRE")
     private String commentaire;
+    @JoinColumn(name = "NO_ENSEIGNANT")
+    @ManyToOne
+    private Enseignant noEnseignant;
+    @JoinColumn(name = "CODE_FORMATION", insertable = false, updatable = false)
+    @ManyToOne
+    private Formation formation;
 
-    @Basic
-    @Column(name = "CODE_FORMATION")
-    public String getCodeFormation() {
-        return codeFormation;
+    public Promotion() {
     }
 
-    public void setCodeFormation(String codeFormation) {
-        this.codeFormation = codeFormation;
+    public Promotion(PromotionPK id, String anneeUniversitaire, String siglePromotion, Short nbMaxEtudiant,
+                     Timestamp dateReponseLp, Timestamp dateReponseLalp, Timestamp dateRentree, String lieuRentree,
+                     String processusStage, String commentaire, Enseignant noEnseignant, Formation formation) {
+        super();
+        this.id = id;
+        this.anneeUniversitaire = anneeUniversitaire;
+        this.siglePromotion = siglePromotion;
+        this.nbMaxEtudiant = nbMaxEtudiant;
+        this.dateReponseLp = dateReponseLp;
+        this.dateReponseLalp = dateReponseLalp;
+        this.dateRentree = dateRentree;
+        this.lieuRentree = lieuRentree;
+        this.processusStage = processusStage;
+        this.commentaire = commentaire;
+        this.noEnseignant = noEnseignant;
+        this.formation = formation;
     }
 
-    @Basic
-    @Column(name = "ANNEE_UNIVERSITAIRE")
     public String getAnneeUniversitaire() {
         return anneeUniversitaire;
     }
@@ -40,18 +67,14 @@ public class Promotion {
         this.anneeUniversitaire = anneeUniversitaire;
     }
 
-    @Basic
-    @Column(name = "NO_ENSEIGNANT")
-    public Integer getNoEnseignant() {
-        return noEnseignant;
+    public Formation getFormation() {
+        return formation;
     }
 
-    public void setNoEnseignant(Integer noEnseignant) {
-        this.noEnseignant = noEnseignant;
+    public void setFormation(Formation formation) {
+        this.formation = formation;
     }
 
-    @Basic
-    @Column(name = "SIGLE_PROMOTION")
     public String getSiglePromotion() {
         return siglePromotion;
     }
@@ -60,8 +83,6 @@ public class Promotion {
         this.siglePromotion = siglePromotion;
     }
 
-    @Basic
-    @Column(name = "NB_MAX_ETUDIANT")
     public Short getNbMaxEtudiant() {
         return nbMaxEtudiant;
     }
@@ -70,8 +91,6 @@ public class Promotion {
         this.nbMaxEtudiant = nbMaxEtudiant;
     }
 
-    @Basic
-    @Column(name = "DATE_REPONSE_LP")
     public Timestamp getDateReponseLp() {
         return dateReponseLp;
     }
@@ -80,8 +99,6 @@ public class Promotion {
         this.dateReponseLp = dateReponseLp;
     }
 
-    @Basic
-    @Column(name = "DATE_REPONSE_LALP")
     public Timestamp getDateReponseLalp() {
         return dateReponseLalp;
     }
@@ -90,8 +107,6 @@ public class Promotion {
         this.dateReponseLalp = dateReponseLalp;
     }
 
-    @Basic
-    @Column(name = "DATE_RENTREE")
     public Timestamp getDateRentree() {
         return dateRentree;
     }
@@ -100,8 +115,6 @@ public class Promotion {
         this.dateRentree = dateRentree;
     }
 
-    @Basic
-    @Column(name = "LIEU_RENTREE")
     public String getLieuRentree() {
         return lieuRentree;
     }
@@ -110,8 +123,6 @@ public class Promotion {
         this.lieuRentree = lieuRentree;
     }
 
-    @Basic
-    @Column(name = "PROCESSUS_STAGE")
     public String getProcessusStage() {
         return processusStage;
     }
@@ -120,8 +131,6 @@ public class Promotion {
         this.processusStage = processusStage;
     }
 
-    @Basic
-    @Column(name = "COMMENTAIRE")
     public String getCommentaire() {
         return commentaire;
     }
@@ -130,26 +139,29 @@ public class Promotion {
         this.commentaire = commentaire;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Promotion promotion = (Promotion) o;
-        return Objects.equals(codeFormation, promotion.codeFormation) &&
-                Objects.equals(anneeUniversitaire, promotion.anneeUniversitaire) &&
-                Objects.equals(noEnseignant, promotion.noEnseignant) &&
-                Objects.equals(siglePromotion, promotion.siglePromotion) &&
-                Objects.equals(nbMaxEtudiant, promotion.nbMaxEtudiant) &&
-                Objects.equals(dateReponseLp, promotion.dateReponseLp) &&
-                Objects.equals(dateReponseLalp, promotion.dateReponseLalp) &&
-                Objects.equals(dateRentree, promotion.dateRentree) &&
-                Objects.equals(lieuRentree, promotion.lieuRentree) &&
-                Objects.equals(processusStage, promotion.processusStage) &&
-                Objects.equals(commentaire, promotion.commentaire);
+    public PromotionPK getId() {
+        return this.id;
+    }
+
+    public void setId(PromotionPK id) {
+        this.id = id;
+    }
+
+    public Enseignant getNoEnseignant() {
+        return noEnseignant;
+    }
+
+    public void setNoEnseignant(Enseignant noEnseignant) {
+        this.noEnseignant = noEnseignant;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(codeFormation, anneeUniversitaire, noEnseignant, siglePromotion, nbMaxEtudiant, dateReponseLp, dateReponseLalp, dateRentree, lieuRentree, processusStage, commentaire);
+    public String toString() {
+        return "Promotion [id=" + id + ", anneeUniversitaire=" + anneeUniversitaire + ", siglePromotion="
+                + siglePromotion + ", nbMaxEtudiant=" + nbMaxEtudiant + ", dateReponseLp=" + dateReponseLp
+                + ", dateReponseLalp=" + dateReponseLalp + ", dateRentree=" + dateRentree + ", lieuRentree="
+                + lieuRentree + ", processusStage=" + processusStage + ", commentaire=" + commentaire
+                + ", noEnseignant=" + noEnseignant + ", formation=" + formation + "]";
     }
+
 }

@@ -1,12 +1,11 @@
 package app.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
-
+//Entité generé avec JPA persistance
 @Entity
 public class Candidat {
     private String noCandidat;
@@ -46,6 +45,8 @@ public class Candidat {
     public String getCodeFormation() {
         return codeFormation;
     }
+
+
 
     public void setCodeFormation(String codeFormation) {
         this.codeFormation = codeFormation;
@@ -230,6 +231,14 @@ public class Candidat {
     public void setConfirmationCandidat(String confirmationCandidat) {
         this.confirmationCandidat = confirmationCandidat;
     }
+
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name="ANNEE_UNIVERSITAIRE", referencedColumnName="ANNEE_UNIVERSITAIRE"),
+            @JoinColumn(name="CODE_FORMATION", referencedColumnName="CODE_FORMATION")
+    })
+    @JsonIgnore
+    private Promotion promotion;
 
     @Basic
     @Column(name = "DATE_REPONSE_CANDIDAT")
