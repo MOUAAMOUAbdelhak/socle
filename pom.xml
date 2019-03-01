@@ -85,7 +85,7 @@
                             <version>1.2.0.Final</version>
                         </path>
                     </annotationProcessorPaths>
-                    <mainClass>com.ProjetAgileApplication</mainClass>
+                    <mainClass>app.socleapp.SocleappApplication</mainClass>
                 </configuration>
                 <executions>
                 </executions>
