@@ -12,6 +12,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 @Configuration
 @ComponentScan(value = "app.dao")
